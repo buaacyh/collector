@@ -12,7 +12,7 @@
 
 #define RETRY 2
 
-char *PUSH_DATA_HEAD="device_id:123,device_config_id:1,method:push_data,count:5;";
+char *PUSH_DATA_HEAD="device_id:30,device_config_id:100,method:push_data,count:5;";
 char *PACKAGE_FORMAT="%s:%.2f,ts:%d;";
 char *PUSH_DATA_FINISH="method:push_data_finish;";
 char *PUSH_DATA_READY="push_data_ready";

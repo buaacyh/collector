@@ -25,7 +25,7 @@ typedef struct vaisal_data_t{
 
 extern vaisal_data_struct vaisal_datas[TH_DATAS_NUM];
 extern void vaisal_init(void);
-
+extern void vaisal_close(void);
 extern void start_vaisal_rev();
 extern void stop_vaisal_rev();
 

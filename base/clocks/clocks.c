@@ -12,7 +12,7 @@
 const Timer_A_ContinuousModeConfig timer_config =
 {
         TIMER_A_CLOCKSOURCE_ACLK,           // ACLK Clock = 1024
-        TIMER_A_CLOCKSOURCE_DIVIDER_1,      //
+        TIMER_A_CLOCKSOURCE_DIVIDER_10,      //
         TIMER_A_TAIE_INTERRUPT_ENABLE,      // Enable Overflow ISR
         TIMER_A_DO_CLEAR                    // Clear Counter
 };

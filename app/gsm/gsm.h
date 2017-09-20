@@ -23,6 +23,8 @@
 //GSM各管脚，RI接收中断初始化
 extern void gsm_init();
 
+extern void gsm_close();
+
 //信息通过DMA传送至GSM发送
 extern void msg_send(char *message);
 

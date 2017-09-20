@@ -144,6 +144,15 @@ void gsm_init()
     //sleep_gsm();
 }
 
+void gsm_close(void){
+    uart_config _gsm_uart_conf = {.gpio_group = GPIO_PORT_P2,
+             .gpio_pins= GPIO_PIN2 | GPIO_PIN3,
+             .port = EUSCI_A1_BASE,
+             .pconf = &gsm_uart_config};
+
+    uart_close(&_gsm_uart_conf);
+}
+
 void _msg_send(char *message)
 {
     uint16_t length;

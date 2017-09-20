@@ -64,6 +64,13 @@ void vaisal_init(void){
       */
 }
 
+void vaisal_close(){
+    uart_config _vaisal_uart_conf = {.gpio_group = GPIO_PORT_P1,
+     .gpio_pins= GPIO_PIN2 | GPIO_PIN3,
+     .port = EUSCI_A0_BASE,
+     .pconf = &vaisal_uart_config};
+    uart_close(&_vaisal_uart_conf);
+}
 
 void start_vaisal_rev(){
     MAP_UART_enableInterrupt(EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT);

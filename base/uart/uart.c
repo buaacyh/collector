@@ -13,3 +13,9 @@ void uart_init(uart_config *uart_conf){
     MAP_UART_initModule(uart_conf->port, uart_conf->pconf);
     MAP_UART_enableModule(uart_conf->port);
 }
+
+void uart_close(uart_config *uart_conf){
+
+    MAP_GPIO_setAsOutputPin(uart_conf->gpio_group, uart_conf->gpio_pins);
+    MAP_GPIO_setOutputLowOnPin(uart_conf->gpio_group, uart_conf->gpio_pins);
+}

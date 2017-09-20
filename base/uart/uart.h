@@ -18,4 +18,5 @@ typedef struct uart_config_t{
 }uart_config;
 
 extern void uart_init(uart_config *uart_conf);
+extern void uart_close(uart_config *uart_conf);
 #endif /* BASE_UART_UART_H_ */

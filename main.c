@@ -12,6 +12,7 @@
 #include "fatfs/ff.h"
 #include "adc/adc.h"
 #include "app/protocol/protocol.h"
+#include "app/power/power.h"
 
 
 #ifdef HAS_VAISAL
@@ -40,33 +41,20 @@ int main(){
     config_relay(RELAY_K_GSM|RELAY_K_CAMERA|RELAY_K_IO|RELAY_K_IO_POWER);
     reset_relay(RELAY_K_GSM|RELAY_K_CAMERA|RELAY_K_IO|RELAY_K_IO_POWER);
 
+    //dcdc disable
+    power_manage_init();
+    dc_5v_disable();
+    dc_33v_disable();
+    tfcard_disable();
+
+
     //clock init
     clock_init();
 
     //timer init
     timer_init();
 
-    //tfcard init
-    f_mount(&fatfs, "",0);
 
-
-#ifdef HAS_VAISAL
-    //init for sensor vaisal
-    vaisal_init();
-#endif
-
-
-#ifdef HAS_TH10S
-    //init for sensor th10s
-    th10s_init();
-#endif
-
-
-#ifdef HAS_CAMERA
-    camera_init();
-#endif
-    //adc14 init
-    ADC14_init();
 
     while(1){
         if(!main_timer_irq_flag){
@@ -83,23 +71,29 @@ void main_timer_process(){
 
     bool ret = false;
     uint8_t i = 0;
+    
+    dc_5v_enable();
+    dc_33v_enable();
 
-    /*
     //open 485 serial port and IO 12V
     set_relay(RELAY_K_IO|RELAY_K_IO_POWER);
 
 
+
 #ifdef HAS_VAISAL
+
+    vaisal_init();
     delay_ms(1000); //wait for 10s with
     start_vaisal_rev();
-    delay_ms(1000);
+    delay_ms(4000);
     stop_vaisal_rev();
+
 
 #endif
 
 
     reset_relay(RELAY_K_IO|RELAY_K_IO_POWER);
-    */
+    vaisal_close();
 
     //construct the msg
 
@@ -109,7 +103,6 @@ void main_timer_process(){
 
     //send msg
     ret=upload_data_start();
-
 #ifdef HAS_VAISAL
     if(ret){
         for(i = 0;i<TH_DATAS_NUM;++i){
@@ -119,11 +112,13 @@ void main_timer_process(){
 #endif
     ret&=upload_data_end();
 
+
     if(ret == false){//send fail
 
     }
 
     //gsm off
+    gsm_close();
     reset_relay(RELAY_K_GSM);
 
     main_timer_irq_flag = false;
